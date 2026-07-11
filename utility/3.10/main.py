@@ -18,7 +18,9 @@ if __name__ == "__main__":
 
     ny_converter = TzConverter("America/New_York")
     parsed_ny = ny_converter.parse_str_to_utc_tz("2026/07/11 08:00:00")
-    print(f"parse_str_to_utc_tz('2026/07/11 08:00:00') for America/New_York: {parsed_ny}")
+    print(
+        f"parse_str_to_utc_tz('2026/07/11 08:00:00') for America/New_York: {parsed_ny}"
+    )
 
     timezones = converter.list_timezone()
     print(f"list_timezone(): {len(timezones)} timezones, e.g. {timezones[:5]}")

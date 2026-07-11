@@ -14,25 +14,23 @@ class TzConverter:
     _local_tz = None
 
     def __init__(self, local_tz: TZLikeType = _default_tz) -> None:
-        """Store the default local timezone used when a call doesn't override it."""
         self._local_tz = self._coerce_tz(local_tz)
 
-    @staticmethod
-    def _coerce_tz(tz: TZLikeType) -> ZoneInfo:
+    @classmethod
+    def _coerce_tz(cls, tz: TZLikeType) -> ZoneInfo:
         """Coerce a timezone name or ZoneInfo into a ZoneInfo instance."""
         if isinstance(tz, ZoneInfo):
             return tz
         return ZoneInfo(tz)
 
-    @staticmethod
-    def _ensure_datetime(dt: datetime) -> datetime:
+    @classmethod
+    def _ensure_datetime(cls, dt: datetime) -> datetime:
         """Raise TypeError if dt is not a datetime instance."""
         if not isinstance(dt, datetime):
             raise TypeError(f"expected datetime, got {type(dt).__name__}")
         return dt
 
     def to_local_tz(self, dt: datetime, local_tz: TZLikeType | None = None) -> datetime:
-        """Convert dt (naive datetimes are assumed UTC) to the local timezone."""
         dt = self._ensure_datetime(dt)
 
         if dt.tzinfo is None:
@@ -42,7 +40,6 @@ class TzConverter:
         )
 
     def to_utc_tz(self, dt: datetime, local_tz: TZLikeType | None = None) -> datetime:
-        """Convert dt (naive datetimes are assumed local) to UTC."""
         dt = self._ensure_datetime(dt)
 
         if dt.tzinfo is None:
@@ -54,13 +51,11 @@ class TzConverter:
         return dt.astimezone(UTC)
 
     def now_local_tz(self, local_tz: TZLikeType | None = None) -> datetime:
-        """Return the current time in the local timezone."""
         return datetime.now(
             self._coerce_tz(local_tz) if local_tz is not None else self._local_tz
         )
 
     def now_utc_tz(self) -> datetime:
-        """Return the current time in UTC."""
         return datetime.now(UTC)
 
     def parse_str_to_utc_tz(

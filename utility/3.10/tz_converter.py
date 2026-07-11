@@ -17,15 +17,15 @@ class TzConverter:
         """Store the default local timezone used when a call doesn't override it."""
         self._local_tz = self._coerce_tz(local_tz)
 
-    @staticmethod
-    def _coerce_tz(tz: TZLikeType) -> ZoneInfo:
+    @classmethod
+    def _coerce_tz(cls, tz: TZLikeType) -> ZoneInfo:
         """Coerce a timezone name or ZoneInfo into a ZoneInfo instance."""
         if isinstance(tz, ZoneInfo):
             return tz
         return ZoneInfo(tz)
 
-    @staticmethod
-    def _ensure_datetime(dt: datetime) -> datetime:
+    @classmethod
+    def _ensure_datetime(cls, dt: datetime) -> datetime:
         """Raise TypeError if dt is not a datetime instance."""
         if not isinstance(dt, datetime):
             raise TypeError(f"expected datetime, got {type(dt).__name__}")
