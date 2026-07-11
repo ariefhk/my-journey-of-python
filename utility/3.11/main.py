@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import date
+
 from tz_converter import TzConverter
 
 if __name__ == "__main__":
@@ -24,3 +26,6 @@ if __name__ == "__main__":
 
     timezones = converter.list_timezone()
     print(f"list_timezone(): {len(timezones)} timezones, e.g. {timezones[:5]}")
+
+    shift_open = converter.shift_boundary_to_utc(date(2026, 6, 6), "15:00", -1)
+    print(f"shift_boundary_to_utc(2026-06-06, '15:00', -1): {shift_open}")
