@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 
+from time_window import TimeWindow
 from tz_converter import TzConverter
 
 if __name__ == "__main__":
@@ -29,3 +30,12 @@ if __name__ == "__main__":
 
     shift_open = converter.shift_boundary_to_utc(date(2026, 6, 6), "15:00", -1)
     print(f"shift_boundary_to_utc(2026-06-06, '15:00', -1): {shift_open}")
+
+    start = datetime(2026, 1, 15, 10, 0, 0)
+    end = datetime(2026, 1, 22, 10, 0, 0)
+    tw = TimeWindow(start, end)
+    print("HOURLY:", list(tw.hourly_windows())[:3])
+    print("DAILY:", list(tw.daily_windows())[:3])
+    print("WEEKLY:", list(tw.weekly_windows())[:3])
+    print("MONTHLY:", list(tw.monthly_windows()))
+    print("TIME WINDOW:", tw.time_windows())
